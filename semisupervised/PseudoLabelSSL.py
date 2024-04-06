@@ -7,9 +7,8 @@ Created on Sun Dec 22 19:22:43 2020
 import keras.backend as K
 from keras.callbacks import Callback, EarlyStopping, ModelCheckpoint
 from keras.metrics import categorical_accuracy
-from keras.layers.core import Dense, Activation, Dropout
+from keras.layers import Dense, Activation, Dropout, BatchNormalization
 import keras
-from keras.layers.normalization import BatchNormalization
 from keras.models import Sequential
 
 import numpy as np
