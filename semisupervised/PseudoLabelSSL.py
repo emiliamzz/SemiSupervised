@@ -4,7 +4,8 @@ Created on Sun Dec 22 19:22:43 2020
 
 @author: rosefun
 """
-import keras.backend as K
+import tensorflow as tf
+import tensorflow.keras.backend as K
 from keras.callbacks import Callback, EarlyStopping, ModelCheckpoint
 from keras.metrics import categorical_accuracy
 from keras.layers import Dense, Activation, Dropout, BatchNormalization
