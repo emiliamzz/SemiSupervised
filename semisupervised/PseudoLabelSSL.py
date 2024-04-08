@@ -5,7 +5,7 @@ Created on Sun Dec 22 19:22:43 2020
 @author: rosefun
 """
 import tensorflow as tf
-import tensorflow.keras.backend as K
+import keras.backend as K
 from keras.callbacks import Callback, EarlyStopping, ModelCheckpoint
 from keras.metrics import categorical_accuracy
 from keras.layers import Dense, Activation, Dropout, BatchNormalization
@@ -89,10 +89,10 @@ class PseudoCallback(Callback):
 			unlabeled_flag = K.reshape(y_true[:, -1], [-1])
 			# the number of labeled samples and pseudo-labeled samples.
 
-			labelIndex = K.tf.where(K.tf.equal(unlabeled_flag, 0.0))
+			labelIndex = tf.where(tf.equal(unlabeled_flag, 0.0))
 			labelIndex = K.reshape(labelIndex, [-1])
 
-			unlabelIndex = K.tf.where(K.tf.equal(unlabeled_flag, 1.0))
+			unlabelIndex = tf.where(tf.equal(unlabeled_flag, 1.0))
 			unlabelIndex = K.reshape(unlabelIndex, [-1])
 
 			labelY = K.gather(y_true_item, labelIndex)
@@ -102,11 +102,11 @@ class PseudoCallback(Callback):
 
 			loss = K.constant(0.0, dtype='float32')
 			# alpha*CE(unlabelX, pseudo_label)
-			loss += self.alpha_t * K.tf.cond(K.tf.equal(K.tf.size(unlabelY), 0), lambda: K.tf.constant(0.0),
-											 lambda: K.tf.reduce_mean(self.crossentropy(unlabelY, unlabelPredictY)))
+			loss += self.alpha_t * tf.cond(tf.equal(tf.size(unlabelY), 0), lambda: tf.constant(0.0),
+											 lambda: tf.reduce_mean(self.crossentropy(unlabelY, unlabelPredictY)))
 			# CE(labeledX, labelY)
-			loss += K.tf.cond(K.tf.equal(K.tf.size(labelY), 0), lambda: K.tf.constant(0.0),
-							  lambda: K.tf.reduce_mean(self.crossentropy(labelY, labelPredictY)))
+			loss += tf.cond(tf.equal(tf.size(labelY), 0), lambda: tf.constant(0.0),
+							  lambda: tf.reduce_mean(self.crossentropy(labelY, labelPredictY)))
 			return loss
 
 		return loss_function
