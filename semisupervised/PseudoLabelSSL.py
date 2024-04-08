@@ -71,6 +71,9 @@ class PseudoCallback(Callback):
 		# this gives the same result as using keras.objective.crossentropy
 		y_pred /= K.sum(y_pred, axis=-1, keepdims=True)
 		y_pred = K.clip(y_pred, K.epsilon(), 1.0 - K.epsilon())
+		# Ensure they're the same type (float32)
+		y_true = y_true.astype('float32')
+		y_pred = y_pred.astype('float32')
 		loss = -(K.sum(y_true * K.log(y_pred), axis=-1))
 
 		return loss
