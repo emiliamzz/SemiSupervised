@@ -72,8 +72,8 @@ class PseudoCallback(Callback):
 		y_pred /= K.sum(y_pred, axis=-1, keepdims=True)
 		y_pred = K.clip(y_pred, K.epsilon(), 1.0 - K.epsilon())
 		# Ensure they're the same type (float32)
-		print(type(y_true))
-		print(type(y_pred))
+		y_pred = tf.cast(y_pred, tf.float32)
+		y_true = tf.cast(y_true, tf.float32)
 		loss = -(K.sum(y_true * K.log(y_pred), axis=-1))
 
 		return loss
